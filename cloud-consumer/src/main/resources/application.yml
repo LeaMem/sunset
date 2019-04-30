@@ -1,0 +1,42 @@
+spring:
+  profiles:
+    active: dev
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  cloud:
+    consul:
+      host: 192.168.5.55
+      discovery:
+        health-check-path: ${server.servlet.context-path}/actuator/health
+        service-name: consumer
+        prefer-ip-address: true
+      port: 8500
+  application:
+    name: consumer
+server:
+  port: 7223
+  servlet:
+    context-path: /consumer
+
+
+
+#hystrix:
+#  command:
+#    UserServiceImpl#findAll():
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 107500
+
+logging:
+  level:
+    com:
+      lea:
+        debug
+
+service:
+  provider: han-provider
+feign:
+  hystrix:
+    enabled: true
