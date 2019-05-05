@@ -9,11 +9,11 @@ spring:
       host: 192.168.5.55
       discovery:
         health-check-path: ${server.servlet.context-path}/actuator/health
-        service-name: consumer
+        service-name: han-consumer
         prefer-ip-address: true
       port: 8500
   application:
-    name: consumer
+    name: han-consumer
 server:
   port: 7223
   servlet:

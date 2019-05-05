@@ -1,10 +1,7 @@
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-
 spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.40.14:3306/kitty?characterEncoding=utf-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
@@ -20,9 +17,13 @@ spring:
       connection-timeout: 15000
       connection-test-query: select 1
 
-  redis:
-    host: 192.168.40.14
-    port: 6379
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+
 
 
 mybatis:
@@ -33,6 +34,6 @@ mybatis:
   type-aliases-package: com.lea.api.entity
 
 # redis地址
-#redission:
-#  url: redis://192.168.40.14:6379
-#  transportMode: NIO
+redission:
+  url: redis://192.168.40.14:6379
+  transportMode: NIO

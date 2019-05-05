@@ -1,0 +1,42 @@
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config/han-provider,
+                            classpath:/config/common
+
+#        git:
+#          uri: git@192.168.40.2:cuij/config-server.git
+#          username: cuij
+#          password: cuijin9874123
+#          search-paths: han-*
+
+    consul:
+      discovery:
+        health-check-path: ${server.servlet.context-path}/actuator/health
+        service-name: han-config
+        prefer-ip-address: true
+
+      host: 192.168.5.55
+      port: 8500
+
+  profiles:
+    active: native
+
+  application:
+    name: han-config
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+server:
+  port: 7555
+#  servlet:
+#    context-path: /config
+
+logging:
+  level:
+    com:
+      lea:
+        debug

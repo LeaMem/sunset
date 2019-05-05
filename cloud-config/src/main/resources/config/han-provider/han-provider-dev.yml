@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: 192.168.5.55
+      discovery:
+        health-check-path: ${server.servlet.context-path}/actuator/health
+        service-name: han-provider
+        prefer-ip-address: true
+      port: 8500
+  application:
+    name: han-provider
+
+server:
+  port: 7222
+  servlet:
+    context-path: /provider
+
+
+logging:
+  level:
+    com:
+      lea:
+        debug
+
+

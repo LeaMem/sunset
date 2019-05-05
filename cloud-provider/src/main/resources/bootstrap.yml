@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    config:
+      label: master
+      name: han-provider, common
+
+      discovery:
+        service-id: han-config
+        enabled: true
+        
+      profile: dev
+
+
+    consul:
+      discovery:
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+        service-name: han-provider
+      host: 192.168.5.55
+      port: 8500
+
+
+  profiles:
+    active: dev
+
+  application:
+    name: han-provider

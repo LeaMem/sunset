@@ -18,22 +18,22 @@ import java.util.Map;
 @Configuration
 public class RedisConfig {
 
-    @Bean(destroyMethod = "shutdown")
-    public RedissonClient redisson(@Value("${redission.url}") String url,
-                                   @Value("${redission.transportMode}") String transportMode) {
-        Config config = new Config();
-
-        config.useSingleServer()
-                .setAddress(url)
-                .setSslEnableEndpointIdentification(false)
-                .setClientName("HanClient");
-
-        config.setCodec(new JsonJacksonCodec());
-
-        config.setTransportMode(TransportMode.valueOf(transportMode));
-
-        return Redisson.create(config);
-    }
+//    @Bean(destroyMethod = "shutdown")
+//    public RedissonClient redisson(@Value("${redission.url}") String url,
+//                                   @Value("${redission.transportMode}") String transportMode) {
+//        Config config = new Config();
+//
+//        config.useSingleServer()
+//                .setAddress(url)
+//                .setSslEnableEndpointIdentification(false)
+//                .setClientName("HanClient");
+//
+//        config.setCodec(new JsonJacksonCodec());
+//
+//        config.setTransportMode(TransportMode.valueOf(transportMode));
+//
+//        return Redisson.create(config);
+//    }
 
 
     @Bean
