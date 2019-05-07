@@ -1,19 +1,25 @@
-package com.lea.oauth.handler;
-
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-public class LoginFailureHandler implements AuthenticationFailureHandler {
-
-    @Override
-    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        System.out.println(e.getClass() + "       " + e.getMessage());
-
-    }
-
-}
+//package com.lea.oauth.handler;
+//
+//import com.lea.oauth.jwt.JwtProvider;
+//import org.springframework.security.core.AuthenticationException;
+//import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+//import org.springframework.stereotype.Component;
+//
+//import javax.servlet.ServletException;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import java.io.IOException;
+//import java.io.PrintWriter;
+//
+//@Component
+//public class LoginFailureHandler implements AuthenticationFailureHandler {
+//
+//    @Override
+//    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+//
+//
+//
+//
+//    }
+//
+//}

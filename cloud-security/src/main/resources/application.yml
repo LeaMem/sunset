@@ -22,4 +22,9 @@ spring:
 
 server:
   port: 7566
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
 
