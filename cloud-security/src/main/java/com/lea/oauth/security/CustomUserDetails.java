@@ -33,8 +33,8 @@ public class CustomUserDetails implements UserDetailsService {
     private Collection<GrantedAuthority> getAuthorities() {
 
         var authList = new ArrayList<GrantedAuthority>();
-        authList.add(new SimpleGrantedAuthority("resource:read"));
-        authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        authList.add(new SimpleGrantedAuthority("resource:insert"));
+        authList.add(new SimpleGrantedAuthority("resource:view"));
 
         return authList;
     }

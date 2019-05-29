@@ -2,43 +2,37 @@ package com.lea.oauth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpRequest;
-import org.springframework.security.access.vote.AbstractAccessDecisionManager;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.net.http.HttpResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class OAuth2TestController {
 
+
     @Autowired
     ApplicationContext applicationContext;
 
     @RequestMapping(value = "han")
-    public Authentication home(HttpServletRequest request, HttpServletResponse response) {
+    public String home(HttpServletRequest request) {
 
-        System.out.println(request.getSession());
+        HttpSession session = request.getSession();
 
-        UsernamePasswordAuthenticationFilter bean = applicationContext.getBean(UsernamePasswordAuthenticationFilter.class);
-        bean.attemptAuthentication(request, response);
+        System.out.println(session);
 
-        System.out.println(request.getSession());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getPrincipal());
+
+        return "success";
     }
 
 

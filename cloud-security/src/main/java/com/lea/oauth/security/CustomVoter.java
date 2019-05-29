@@ -41,7 +41,7 @@ public class CustomVoter implements AccessDecisionVoter<FilterInvocation> {
 
         }
 
-        return ACCESS_DENIED;
+        return ACCESS_ABSTAIN;
 
 
     }

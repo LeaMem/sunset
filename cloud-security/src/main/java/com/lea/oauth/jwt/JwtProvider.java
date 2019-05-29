@@ -2,57 +2,66 @@ package com.lea.oauth.jwt;
 
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.Collection;
+
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class JwtProvider {
 
+    @Autowired
+    ObjectMapper objectMapper;
 
     private static final String key = "secret-key";
 
-    private static final Long validityInMilliseconds = 3600000L;
+    private static final Long validityInMilliseconds = TimeUnit.HOURS.toMinutes(1);
 
 
-    public static String createToken(Authentication authentication) throws IOException {
+    public String createToken(Authentication authentication) throws IOException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(authentication.getClass());
 
         User user = (User) authentication.getPrincipal();
 
-        authentication.getAuthorities();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("alg", "HS256");
-        map.put("typ", "JWT");
-
-
-        JWTCreator.Builder builder = JWT.create();
 
         long now = System.currentTimeMillis();
 
-        long expired = now + TimeUnit.HOURS.toMinutes(1);
+        long expired = now + validityInMilliseconds;
 
 
-        String token = builder.withHeader(map)
-                .withClaim("auth", objectMapper.writeValueAsString(authentication))
-                .withIssuedAt(new Date(now))
+        // hmac
+        Algorithm algorithm = Algorithm.HMAC256(key);
+
+        return JWT.create()
+                .withIssuer("lea")
                 .withExpiresAt(new Date(expired))
-                .sign(Algorithm.HMAC256(key));
+                .withClaim("user", objectMapper.writeValueAsString(authentication))
+                .sign(algorithm);
 
+    }
 
-        return token;
+    public Authentication decodeToken(String token) throws Exception {
+        // hmac
+        Algorithm algorithm = Algorithm.HMAC256(key);
+        DecodedJWT decodedJWT = JWT.decode(token);
+
+        String user = decodedJWT.getClaim("user").asString();
+
+        return objectMapper.readValue(user, UsernamePasswordAuthenticationToken.class);
     }
 
 

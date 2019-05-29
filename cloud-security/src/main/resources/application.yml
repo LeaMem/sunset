@@ -6,18 +6,18 @@ management:
 
 spring:
   cloud:
-
-    consul:
-      discovery:
-        prefer-ip-address: true
-        health-check-path: /actuator/health
-        service-name: han-security
-      host: 192.168.5.55
-      port: 8500
+#    consul:
+#      discovery:
+#        prefer-ip-address: true
+#        health-check-path: /actuator/health
+#        service-name: han-security
+#      host: 192.168.5.55
+#      port: 8500
 
   application:
     name: han-security
-
+  profiles:
+    active: dev
 
 
 server:
@@ -27,4 +27,6 @@ logging:
     org:
       springframework:
         security: debug
+
+
 

@@ -1,8 +1,10 @@
 package com.lea.oauth.config;
 
+import com.lea.api.mapper.ResourceMapper;
 import com.lea.oauth.security.CustomInvocationSecurityMetaDataSource;
 import com.lea.oauth.security.CustomPasswordEncoder;
 import com.lea.oauth.security.CustomVoter;
+import com.lea.oauth.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -14,24 +16,20 @@ import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +43,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Qualifier("customUserDetails")
     UserDetailsService userDetailsService;
 
+    @Autowired
+    ResourceMapper resourceMapper;
+
+    @Autowired
+    JwtFilter jwtFilter;
+
 //    @Autowired
 //    AuthenticationFailureHandler authenticationFailureHandler;
 
@@ -57,18 +61,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests()
-                .antMatchers("/actuator/**")
-                .permitAll()
-                .antMatchers(HttpMethod.OPTIONS)
-                .permitAll()
-                .antMatchers("/h").hasAuthority("resource:read")
-                .antMatchers("/han").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O fsn) {
 
-
-                        fsn.setSecurityMetadataSource(customInvocationSecurityMetaDataSource(fsn.getSecurityMetadataSource()));
+                        fsn.setSecurityMetadataSource(customInvocationSecurityMetaDataSource(fsn.getSecurityMetadataSource(), resourceMapper));
 
                         fsn.setAccessDecisionManager(accessDecisionManager());
 
@@ -77,6 +75,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 })
                 .anyRequest().authenticated();
 
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.formLogin()
 
@@ -90,7 +89,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
         http.csrf().disable();
-
 //
 //        http.exceptionHandling()
 //                .authenticationEntryPoint(new AuthenticationEntryPoint() {
@@ -111,21 +109,38 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         //允许跨域
         http.cors();
 
+        //是不是可以分布式调用
+//        http.securityContext().securityContextRepository()
 
 
         //不创建session
-//        http.sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
+//        auth.authenticationProvider()
+
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(new CustomPasswordEncoder());
     }
 
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+
+        /**
+         *      忽略一些路径
+         */
+        web.ignoring().antMatchers("/actuator/**", "/info", "/health", "/hystrix.stream", "/open/**");
+        web.ignoring().antMatchers(HttpMethod.OPTIONS);
+
+
+        super.configure(web);
+    }
 
     /**
      * 自定义的metasource
@@ -134,8 +149,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
      * @return
      */
     @Bean
-    public CustomInvocationSecurityMetaDataSource customInvocationSecurityMetaDataSource(FilterInvocationSecurityMetadataSource securityMetadataSource) {
-        return new CustomInvocationSecurityMetaDataSource(securityMetadataSource);
+    public CustomInvocationSecurityMetaDataSource customInvocationSecurityMetaDataSource(FilterInvocationSecurityMetadataSource securityMetadataSource, ResourceMapper resourceMapper) {
+        return new CustomInvocationSecurityMetaDataSource(securityMetadataSource, resourceMapper);
     }
 
     @Bean
@@ -165,6 +180,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 "access-control-allow-methods",
                 "access-control-allow-origin"));
 
+        /**
+         *  用户凭证
+         */
+        corsConfiguration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         source.registerCorsConfiguration("/**", corsConfiguration);
@@ -172,6 +192,5 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return source;
 
     }
-
 
 }
