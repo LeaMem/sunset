@@ -16,6 +16,8 @@
         <module>natty</module>
         <module>cloud-config</module>
         <module>cloud-security</module>
+        <module>data-structure</module>
+        <module>script</module>
     </modules>
 
     <name>sunset</name>
