@@ -18,6 +18,7 @@
         <module>cloud-security</module>
         <module>data-structure</module>
         <module>script</module>
+        <module>kakaf</module>
     </modules>
 
     <name>sunset</name>
@@ -25,6 +26,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
@@ -99,6 +101,44 @@
                 <artifactId>protobuf-java-util</artifactId>
                 <version>3.7.1</version>
             </dependency>
+
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer-spring</artifactId>
+                <version>5.5.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>5.5.1</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.5.7</version>
+                <type>pom</type>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.spockframework/spock-core -->
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>1.3-groovy-2.5</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.spockframework/spock-spring -->
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-spring</artifactId>
+                <version>1.3-groovy-2.5</version>
+                <scope>test</scope>
+            </dependency>
+
+
         </dependencies>
 
     </dependencyManagement>
@@ -123,13 +163,30 @@
                     </executions>
                 </plugin>
 
+
+                <!-- mybatis generator 自动生成代码插件 -->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-maven-plugin</artifactId>
+                    <version>1.3.7</version>
                     <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                        <!--generator配置文件所在位置-->
+                        <configurationFile>${basedir}/src/main/resources/config/generatorConfig.xml</configurationFile>
+                        <overwrite>true</overwrite>
+                        <verbose>true</verbose>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>8.0.16</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>tk.mybatis</groupId>
+                            <artifactId>mapper</artifactId>
+                            <version>4.1.5</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
 

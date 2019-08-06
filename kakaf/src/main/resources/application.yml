@@ -1,0 +1,20 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /kakaf
+
+
+
+
+
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  kafka:
+    bootstrap-servers: 192.168.40.32:9092
+    producer:
+      batch-size: 65536
+      buffer-memory: 524288
+      retries: 3

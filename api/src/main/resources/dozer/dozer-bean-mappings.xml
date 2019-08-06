@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <stop-on-errors>false</stop-on-errors>
+        <date-format>yyyy-MM-dd HH:mm:ss</date-format>
+        <wildcard>true</wildcard>
+    </configuration>
+
+    <mapping>
+        <class-a>com.sztech.lib.provider.entity.InterfaceParam</class-a>
+        <class-b>com.sztech.other.vo.SqlParam</class-b>
+        <field>
+            <a>whereQuery</a>
+            <b>whereQuery</b>
+        </field>
+        <field>
+            <a>mustIn</a>
+            <b>mustIn</b>
+        </field>
+        <field>
+            <a>paramName</a>
+            <b>paramName</b>
+        </field>
+    </mapping>
+
+    <!--    <mapping>-->
+    <!--        <class-a>com.sztech.gateway.gatewayopenplatform.entity.RequestPloy</class-a>-->
+    <!--        <class-b>com.sztech.gateway.gatewayopenplatform.entity.dto.RefreshCodeDto</class-b>-->
+    <!--        <field>-->
+    <!--            <a>refreshEndTime</a>-->
+    <!--            <b>refreshSecretEndTime</b>-->
+    <!--        </field>-->
+    <!--        <field>-->
+    <!--            <a>requestEndTime</a>-->
+    <!--            <b>requestSecretEndTime</b>-->
+    <!--        </field>-->
+    <!--    </mapping>-->
+
+
+</mappings>

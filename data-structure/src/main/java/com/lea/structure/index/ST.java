@@ -1,4 +1,4 @@
-package com.han.natty.structure;
+package com.lea.structure.index;
 
 public interface ST<Key extends Comparable<Key>, Value>{
 
