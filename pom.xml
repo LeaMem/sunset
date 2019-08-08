@@ -88,19 +88,19 @@
             </dependency>
 
 
-            <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
-            <dependency>
-                <groupId>com.google.protobuf</groupId>
-                <artifactId>protobuf-java</artifactId>
-                <version>3.7.1</version>
-            </dependency>
+<!--            &lt;!&ndash; https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.google.protobuf</groupId>-->
+<!--                <artifactId>protobuf-java</artifactId>-->
+<!--                <version>3.7.1</version>-->
+<!--            </dependency>-->
 
-            <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java-util -->
-            <dependency>
-                <groupId>com.google.protobuf</groupId>
-                <artifactId>protobuf-java-util</artifactId>
-                <version>3.7.1</version>
-            </dependency>
+<!--            &lt;!&ndash; https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java-util &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.google.protobuf</groupId>-->
+<!--                <artifactId>protobuf-java-util</artifactId>-->
+<!--                <version>3.7.1</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>net.sf.dozer</groupId>
