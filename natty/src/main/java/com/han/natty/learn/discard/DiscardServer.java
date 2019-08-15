@@ -16,30 +16,43 @@ public class DiscardServer {
 
     public void run() throws InterruptedException {
 
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+//        EventLoopGroup bossGroup = new NioEventLoopGroup();
+//        EventLoopGroup workerGroup = new NioEventLoopGroup();
+//
+//        try{
+//            ServerBootstrap bootstrap = new ServerBootstrap();
+//            bootstrap.group(bossGroup, workerGroup)
+//                    .channel(NioServerSocketChannel.class)
+//                    .childHandler(new ChannelInitializer<SocketChannel>() {
+//
+//                        @Override
+//                        protected void initChannel(SocketChannel ch) throws Exception {
+//                            ch.pipeline().addLast(new DiscardServerHandler());
+//                        }
+//                    })
+//                    .option(ChannelOption.SO_BACKLOG, 128)
+//                    .childOption(ChannelOption.SO_KEEPALIVE, true);
+//
+//            ChannelFuture future = bootstrap.bind(port).sync();
+//
+//            future.channel().closeFuture().sync();
+//
+//        }finally {
+//            workerGroup.shutdownGracefully();
+//            bossGroup.shutdownGracefully();
+//        }
+        han: {
 
-        try{
-            ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
+            System.out.println("kk");
 
-                        @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new DiscardServerHandler());
-                        }
-                    })
-                    .option(ChannelOption.SO_BACKLOG, 128)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true);
+            for(int i = 0; i < 10; i++){
+                if(i == 6){
+                    break han;
+                }
+                System.out.println(i);
+            }
 
-            ChannelFuture future = bootstrap.bind(port).sync();
-
-            future.channel().closeFuture().sync();
-
-        }finally {
-            workerGroup.shutdownGracefully();
-            bossGroup.shutdownGracefully();
+            System.out.println("are you ok");
         }
 
     }

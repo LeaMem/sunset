@@ -28,7 +28,7 @@ public class EchoServer {
                         }
                     });
             ChannelFuture future = serverBootstrap.bind().sync();
-            future.channel().close().sync();
+            future.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

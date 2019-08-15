@@ -33,6 +33,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Configuration
 @EnableWebSecurity
@@ -192,5 +193,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return source;
 
     }
+
+    //public static void main(String[] args) {
+    //    Pattern pattern = Pattern.compile("(([1-9]\\d*,)*([1-9]\\d*))");
+    //    String value = "1,";
+    //    System.out.println(pattern.matcher(value).matches());
+    //}
 
 }

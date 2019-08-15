@@ -5,7 +5,6 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-import java.util.concurrent.TimeUnit;
 
 public class SecondEchoServerHandler extends ChannelInboundHandlerAdapter {
 
@@ -14,7 +13,7 @@ public class SecondEchoServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println(ctx.channel().remoteAddress() +
                 " -> Server: " + msg.toString());
 
-        String toS = msg.toString();
+        var toS = msg.toString();
 
         String message = "dhm: " + msg.toString() + "\n";
         final ChannelFuture future = ctx.write("dhm: " + msg.toString() + "\n");
