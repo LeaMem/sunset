@@ -17,8 +17,8 @@
         <module>cloud-config</module>
         <module>cloud-security</module>
         <module>data-structure</module>
-        <module>script</module>
         <module>kakaf</module>
+        <module>cloud-alibaba-nacos</module>
     </modules>
 
     <name>sunset</name>
@@ -46,6 +46,14 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>Greenwich.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.1.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: lea-nacos-config
+  cloud:
+    nacos:
+      config:
+        namespace: 13e83c98-841a-49c8-82eb-9434b65dd376
+        group: test
+        server-addr: 192.168.0.105:8848
+        file-extension: yml
+
+#        ext-config:
+#          - data-id: logback-spring.xml
+#            refresh: true
+#            group: log
+#            file-extension: xml
+#          - data-id: redis-${spring.profiles.active}.yml
+#            refresh: true
+#            group: middle_ware
+
+      discovery:
+        server-addr: ${spring.cloud.nacos.config.server-addr}
+  profiles:
+    active: dev

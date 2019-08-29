@@ -23,8 +23,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
-                .addListener(ChannelFutureListener.CLOSE);
+        System.out.println("1的hashcode " + System.identityHashCode(ctx.pipeline()));
+        System.out.println("现在的pipeline1 " + ctx.pipeline());
+        ctx.fireChannelReadComplete();
     }
 
     @Override
