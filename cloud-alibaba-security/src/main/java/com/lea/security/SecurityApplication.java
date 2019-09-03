@@ -1,18 +1,19 @@
-package com.lea.nacos;
+package com.lea.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.util.Map;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.lea")
-@EnableDiscoveryClient
-
-public class NacosConfigApplication {
+public class SecurityApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NacosConfigApplication.class, args);
+        SpringApplication.run(SecurityApplication.class, args);
     }
+
+
 
 }

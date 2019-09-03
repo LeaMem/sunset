@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: athena-open-catalog
+  cloud:
+    nacos:
+#      config:
+#        namespace: a423738f-4128-490c-bc84-ba95a8ee8a7d
+#        group: open_catalog
+#        server-addr: 192.168.5.83:8848
+#        file-extension: yml
+#
+#        ext-config:
+#          - data-id: datasource-${spring.profiles.active}.yml
+#            refresh: true
+#            group: middle_ware
+#          - data-id: redis-${spring.profiles.active}.yml
+#            refresh: true
+#            group: middle_ware
+
+      discovery:
+        server-addr: 192.168.5.83:8848
+  profiles:
+    active: dev

@@ -6,7 +6,7 @@ import org.redisson.api.RedissonClient;
 
 public class BaseTest {
 
-    private RedissonClient redissonClient;
+     RedissonClient redissonClient;
 
     public BaseTest() {
         this.redissonClient = new RedisClient().getRedissonClient();
